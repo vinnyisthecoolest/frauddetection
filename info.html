@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Mermaid</title>
+    <title>Info</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/info.css" type="text/css">
   </head>
   <body>
     <!-- ds[Data Stream] -.-> kafka((&lt;img src&#61;&#39;https://raw.githubusercontent.com/ServiceStack/Assets/master/img/livedemos/techstacks/kafka-logo.png&#39; width&#61;&#39;50px&#39; /&gt;)) -->
     <div class="mt-3 ml-3">
+      <button href="/" id="button" class="btn btn-outline-primary">Back to Dashboard</button>
       <button id="button" class="btn btn-outline-light">Overview</button>
       <span class="ml-5">Click diagram for more info:</span>
     </div>
@@ -17,15 +18,15 @@
     <div class="mermaid text-center">
       graph LR
         stream>Data Stream] -.-> kafka((Kafka))
-        kafka -.-> lake[Data Lake]
-        lake --> spark((Spark))
-        spark --> lake
+        kafka -.-> hdfs[HDFS]
+        hdfs --> spark((Spark))
+        spark --> hdfs
         spark --> api
         api -.-> mongo[MongoDB]
         mongo -.-> dash(Dashboard)
         kafka -.-> api(Model Prediction API)
 
-        click stream,kafka,lake,spark,api,mongo,dash showInfo
+        click stream,kafka,hdfs,spark,api,mongo,dash showInfo
     </div>
 
     <div class="container">
@@ -70,8 +71,8 @@
           It also replicates the data between nodes preventing data loss.
         </p>
       </div>
-      <div id="lake-info" class="info">
-        <h2>Data Lake</h2>
+      <div id="hdfs-info" class="info">
+        <h2>Hadoop HDFS</h2>
         <p>
           Since the data is so large, we want to store it in a way for
           efficient processing and high fault-tolerance. We use a distributed
