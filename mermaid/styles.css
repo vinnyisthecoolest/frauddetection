@@ -1,0 +1,29 @@
+html, body {
+  background: #212121;
+  color: white;
+}
+
+.info {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+
+.node:hover {
+  fill: black;
+}
+
+.info {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.edgePath .path {
+  stroke: #ffffff !important;
+}
+
+.arrowheadPath {
+  fill: #ffffff !important;
+}

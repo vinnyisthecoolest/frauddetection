@@ -16,7 +16,6 @@ const updatePlots = (data) => {
   let count = 0
   const interval = setInterval(() => {
     const newData = dataWindow(data, count)
-    // const filterArray = newData.prob.map(x => x > 0.5 ? true : false)
     const filterArray = newData.prob
       .map((x, i) => x > 0.5 ? {'prob': x, 'pos': i} : false)
     const values = dataColumns
@@ -43,18 +42,21 @@ const updatePlots = (data) => {
           showarrow: true,
           arrowhead: 5,
           font: {
-            // family: 'Courier New, monospace',
-            // size: 14,
             color: '#F44336',
           },
-          ax: 0,
-          ay: -40,
+          // ax: 0,
+          // ay: -40,
         }
-      })
+      }),
     }
 
     Plotly.update('graph', dataUpdate, graphLayout)
     Plotly.update('table', tableUpdate)
+
+    document.getElementById('alert').style.display =
+      filterArray[filterArray.length - 1]
+      ? 'block'
+      : 'none'
 
     if (count > 999) {
       count = 0
@@ -74,7 +76,6 @@ const tableData = [{
     font: {family: "Arial", size: 14, color: "white"}
   },
   cells: {
-    // values: [],
     align: "center",
     line: {color: '#616161', width: 1},
     fill: {color: '#424242'},
@@ -86,58 +87,65 @@ const tableLayout = {
   paper_bgcolor: 'rgba(0,0,0,0)',
   plot_bgcolor: 'rgba(0,0,0,0)',
   margin: {
-    t: 20
+    t: 0,
+    b: 0,
   },
-  height: 250,
+  height: 200,
+  autosize: true,
 }
 
 const layout = {
-  height: 450,
+  height: 375,
+  font: {
+    color: 'white',
+  },
+  autosize: true,
   xaxis: {
     range: [0, 100],
     showgrid: false,
     showline: false,
     zeroline: false,
     fixedrange: true,
-    // tickvals=[0, 50, 100, 150, 200],
-    // ticktext=['200', '150', '100', '50', '0'],
-    title: 'Time',
+    tickmode: 'array',
+    tickvals: [0, 50, 100],
+    ticktext: ['100', '50', '0'],
+    title: 'Time Elapsed',
   },
   yaxis: {
     range: [0, 1],
     showline: false,
     fixedrange: true,
     zeroline: false,
+    gridcolor: '#444',
     title: 'Probabilty of Fraud',
   },
   margin: {
     t: 45,
     l: 50,
     r: 50,
+    b: 40,
+    pad: 5,
   },
   paper_bgcolor: 'rgba(0,0,0,0)',
-  plot_bgcolor: 'rgba(0,0,0,0)'
-  // paper_bgcolor: '#424242',
-  // plot_bgcolor: '#424242'
-  // annotations: []
+  plot_bgcolor: 'rgba(0,0,0,0)',
+}
+
+const initialGraphLayout = {
+  hoverinfo: 'y'
 }
 
 Plotly.d3.json('data.json', (error, data) => {
   if (error) throw error
+  const initialData = {y: data.prob.slice(0, 100)}
 
-  // const tableValues = dataColumns.map(x => data[x].slice(0, 100))
-
-  Plotly.plot('graph', [{y: data.prob.slice(0, 100)}], layout, options)
+  Plotly.plot('graph', [{...initialGraphLayout, initialData}], layout, options)
   Plotly.plot('table', tableData, tableLayout, options)
 
   updatePlots(data)
 })
 
 const options = {
-  scrollZoom: false, // lets us scroll to zoom in and out - works
-  showLink: false, // removes the link to edit on plotly - works
-  // modeBarButtonsToRemove: ['toImage', 'zoom2d', 'pan', 'pan2d', 'autoScale2d'],
-  //modeBarButtonsToAdd: ['lasso2d'],
-  displayLogo: false, // this one also seems to not work
-  displayModeBar: false, //this one does work
+  scrollZoom: false,
+  showLink: false,
+  displayModeBar: false,
 }

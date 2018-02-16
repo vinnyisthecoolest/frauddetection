@@ -1,8 +1,22 @@
-html {
+html body {
   background: #212121;
 }
 
-h1 {
+h2 {
   color: #EEEEEE;
-  text-align: center;
+  margin-top: 10px;
+}
+
+h5 {
+  color: #F44336;
+  margin-top: 20px;
+  margin-left: 80px;
+}
+
+#alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  display: none;
 }
