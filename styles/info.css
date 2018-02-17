@@ -11,8 +11,12 @@ html, body {
   display: block;
 }
 
-.node:hover {
-  fill: black;
+.active-node :first-child {
+  fill: #007bff !important;
+}
+
+.active-node .label {
+  color: white !important;
 }
 
 .info {
@@ -27,3 +31,4 @@ html, body {
 .arrowheadPath {
   fill: #ffffff !important;
 }
+
